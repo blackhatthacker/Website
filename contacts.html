@@ -1,52 +1,70 @@
 <!DOCTYPE html>
-<html lang="en kh">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SCORPIO STORE</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Creepster&family=Poetsen+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-      <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poetsen+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <header>
-      <nav></nav>
-    </header>
-    <main>
-      <section class="contact">
-        <h1>Contact Us</h1>
-        <p>Follow us on social media or send us a message on Telegram.</p>
-        <div class="link">
-          <a
-            href="https://t.me/SorryForallofthat"
-            target="_blank"
-            class="telegram"
-          >
-            <img src="/Img/telegram.svg" alt="Telegram" />
-          </a>
-          <a
-            href="https://www.facebook.com/your_facebook_page"
-            target="_blank"
-            class="facebook"
-          >
-            <img src="/Img/facebook.svg" alt="Facebook" />
-          </a>
-        </div>
-      </section>
-    </main>
-    <footer>
-      <!-- Your footer content here -->
-    </footer>
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload and Download</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            text-align: center;
+        }
+        .upload-section {
+            margin-bottom: 30px;
+        }
+        .file-list {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>File Upload and Download</h1>
+
+    <!-- File Upload Section -->
+    <div class="upload-section">
+        <input type="file" id="fileInput">
+        <button onclick="uploadFile()">Upload</button>
+    </div>
+
+    <!-- List of Uploaded Files -->
+    <div class="file-list" id="fileList">
+        <h2>Uploaded Files:</h2>
+        <ul id="uploadedFiles"></ul>
+    </div>
+
+    <script>
+        let uploadedFiles = [];
+
+        function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+            const fileList = document.getElementById('uploadedFiles');
+
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                uploadedFiles.push(file);
+
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `${file.name} <button onclick="downloadFile(${uploadedFiles.length - 1})">Download</button>`;
+                fileList.appendChild(listItem);
+
+                fileInput.value = ''; // Clear input after upload
+            }
+        }
+
+        function downloadFile(index) {
+            const file = uploadedFiles[index];
+            const url = URL.createObjectURL(file);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = file.name;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
+
+</body>
 </html>
